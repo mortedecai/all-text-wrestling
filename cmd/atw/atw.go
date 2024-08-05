@@ -1,25 +1,19 @@
 package main
 
 import (
-	"os"
+	"context"
+	"github.com/mortedecai/all-text-wrestling/internal/app"
 )
 
-type atwApp struct {
-	// TODO: {mortedecai} Move this to a more appropriate location in future.
-
-	out *os.File
-}
-
-func New(out *os.File) *atwApp {
-	return &atwApp{out: out}
-}
-
-func (atw *atwApp) Write(msg string) (n int, err error) {
-	// TODO: {mortedecai} Delete this once more testable code is in place.
-	return atw.out.WriteString(msg)
+func prepare() (app.ATW, context.CancelFunc) {
+	ctx, cancel := context.WithCancel(context.Background())
+	a, _ := app.New(app.ATW_CONSOLE, ctx, nil)
+	return a, cancel
 }
 
 func main() {
-	atw := New(os.Stdout)
-	atw.Write("Hello\n")
+	atw, cancel := prepare()
+	// TODO: {mortedecai} Remove this once actual app-iness happens.
+	_, _ = atw.WriteString("Hello\n")
+	cancel()
 }
