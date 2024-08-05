@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+PROJECT_ROOT=$(git rev-parse --show-toplevel)
+EXIT_USAGE=1
+
+. ${PROJECT_ROOT}/scripts/_command.zsh
+
+usage() {
+   echo "Project File Usage:"
+   echo -e ""
+   echo -e "./project [cmd] [cmd_options]"
+}
+
+run() {
+  if [[ $# -lt 1 ]]; then
+    usage
+    exit ${EXIT_USAGE}
+  fi
+
+  _command "cmd" "$@"
+}
+
+run "$@"
