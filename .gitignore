@@ -27,3 +27,5 @@ go.work.sum
 # .idea dir
 .idea/
 
+# Output dir(s)
+bin/

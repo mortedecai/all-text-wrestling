@@ -21,5 +21,5 @@ func (atw *atwApp) Write(msg string) (n int, err error) {
 
 func main() {
 	atw := New(os.Stdout)
-	atw.Write("Hello")
+	atw.Write("Hello\n")
 }
