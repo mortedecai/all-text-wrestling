@@ -1,9 +1,9 @@
 cmd_build_usage() {
-  echo "./project build usage"
-  echo ""
-  echo -e "./project build [<options>]"
-  echo -e "\t WHERE <options> includes:"
-  echo -e "\t\t -o outputFile (default: atw)"
+  _indent 0 "./project build usage"
+  _indent 0 ""
+  _indent 0 "./project build [<options>]"
+  _indent 1 "WHERE <options> includes:"
+  _indent 2 "-o outputFile (default: atw)"
 }
 
 cmd_build() {

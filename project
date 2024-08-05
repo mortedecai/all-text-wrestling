@@ -4,6 +4,7 @@ PROJECT_ROOT=$(git rev-parse --show-toplevel)
 EXIT_USAGE=1
 
 . ${PROJECT_ROOT}/scripts/_command.zsh
+. ${PROJECT_ROOT}/scripts/_output.zsh
 
 usage() {
    echo "Project File Usage:"
