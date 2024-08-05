@@ -1,11 +1,6 @@
-name: Build
+name: Release
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, synchronize, reopened]
+  release: [ released ]
 jobs:
   prepare:
     name: Checkout & Test
@@ -26,12 +21,8 @@ jobs:
             .reports/
       - name: Version
         run: |
-        VERSION="v0.0.0-$(git rev-parse --short HEAD)"
-        if [[ $(git tag -l | wc -l) -gt 0 ]]; then
-          VERSION=$(git describe --tags)
-        fi
-        echo "sonar.projectVersion=$VERSION"
-        echo "sonar.projectVersion=$VERSION" >> sonar-project.properties
+        echo "sonar.projectVersion=${{ github.event.release.name }}"
+        echo "sonar.projectVersion=${{ github.event.release.name }}" >> sonar-project.properties
   sonarcloud:
     name: SonarCloud
     needs: [prepare]
