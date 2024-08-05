@@ -26,12 +26,12 @@ jobs:
             .reports/
       - name: Version
         run: |
-        VERSION="v0.0.0-$(git rev-parse --short HEAD)"
-        if [[ $(git tag -l | wc -l) -gt 0 ]]; then
-          VERSION=$(git describe --tags)
-        fi
-        echo "sonar.projectVersion=$VERSION"
-        echo "sonar.projectVersion=$VERSION" >> sonar-project.properties
+          VERSION="v0.0.0-$(git rev-parse --short HEAD)"
+          if [[ $(git tag -l | wc -l) -gt 0 ]]; then
+            VERSION=$(git describe --tags)
+          fi
+          echo "sonar.projectVersion=$VERSION"
+          echo "sonar.projectVersion=$VERSION" >> sonar-project.properties
   sonarcloud:
     name: SonarCloud
     needs: [prepare]
