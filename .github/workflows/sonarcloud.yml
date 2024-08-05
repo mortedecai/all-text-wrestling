@@ -36,7 +36,7 @@ jobs:
         with:
           name: project-reports
       - name: Reports Dir
-        run: ls -R .reports/
+        run: ls -R .
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
