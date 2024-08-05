@@ -35,6 +35,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: project-reports
+          path: .reports/
       - name: Reports Dir
         run: ls -R .
       - name: SonarCloud Scan
