@@ -1,11 +1,27 @@
 name: Build
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
+  prepare:
+    name: Checkout & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Unit Tests
+        run: |
+          ./project test -c coverage.out -H coverage.html -j unit_test.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: project-reports
+          path: |
+            .reports/
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
@@ -13,6 +29,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/download-artifact@v4
+        with:
+          name: project-reports
+      - name: Reports Dir
+        run: ls -R .reports/
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
