@@ -10,8 +10,8 @@ import (
 // ATW is the application interface for the all text wrestling game.
 type ATW interface {
 	io.StringWriter
-	Start(context.Context) error
-	Stop(context.Context) error
+	Start() error
+	Stop() error
 }
 
 // atwVersion is a non-exported type to ensure only implemented app versions are supported.
