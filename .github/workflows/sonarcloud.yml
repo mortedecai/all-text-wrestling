@@ -24,14 +24,6 @@ jobs:
           name: project-reports
           path: |
             .reports/
-      - name: Version
-        run: |
-          VERSION="v0.0.0-$(git rev-parse --short HEAD)"
-          if [[ $(git tag -l | wc -l) -gt 0 ]]; then
-            VERSION=$(git describe --tags)
-          fi
-          echo "sonar.projectVersion=$VERSION"
-          echo "sonar.projectVersion=$VERSION" >> sonar-project.properties
   sonarcloud:
     name: SonarCloud
     needs: [prepare]
@@ -44,8 +36,14 @@ jobs:
         with:
           name: project-reports
           path: .reports/
-      - name: Reports Dir
-        run: ls -aR .
+      - name: Version
+        run: |
+          VERSION="v0.0.0-$(git rev-parse --short HEAD)"
+          if [[ $(git tag -l | wc -l) -gt 0 ]]; then
+            VERSION=$(git describe --tags)
+          fi
+          echo "sonar.projectVersion=$VERSION"
+          echo "sonar.projectVersion=$VERSION" >> sonar-project.properties
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:

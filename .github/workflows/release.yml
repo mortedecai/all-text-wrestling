@@ -1,6 +1,7 @@
 name: Release
 on:
-  release: [ released ]
+  release:
+    types: [ released ]
 jobs:
   prepare:
     name: Checkout & Test
@@ -19,10 +20,6 @@ jobs:
           name: project-reports
           path: |
             .reports/
-      - name: Version
-        run: |
-          echo "sonar.projectVersion=${{ github.event.release.name }}"
-          echo "sonar.projectVersion=${{ github.event.release.name }}" >> sonar-project.properties
   sonarcloud:
     name: SonarCloud
     needs: [prepare]
@@ -35,8 +32,10 @@ jobs:
         with:
           name: project-reports
           path: .reports/
-      - name: Reports Dir
-        run: ls -aR .
+      - name: Version
+        run: |
+          echo "sonar.projectVersion=${{ github.event.release.name }}"
+          echo "sonar.projectVersion=${{ github.event.release.name }}" >> sonar-project.properties
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
